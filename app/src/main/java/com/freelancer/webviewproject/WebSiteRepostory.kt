@@ -23,4 +23,12 @@ class WebSiteRepostory(
         }
     }
 
+    suspend fun getLinks(){
+        val result = webSiteLinkApi.getLinks()
+        Log.d("TASDFAFDASFDA", "getLinks: $result")
+        if (result.body() != null){
+            webSiteLiveData.postValue(result.body())
+        }
+    }
+
 }

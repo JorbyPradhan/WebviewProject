@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
@@ -102,21 +103,23 @@ class MainActivity : AppCompatActivity() {
 
 //        val decor = window.decorView
 //        decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        if(BuildConfig.TYPE == 1){
-            val webLinkService = RetrofitHelper.getInstance(this).create(WebSiteLinkApi::class.java)
-            val buyerRepository = WebSiteRepostory(webLinkService)
-            mainViewModel = ViewModelProvider(
-                this,
-                MainViewModelFactory(buyerRepository)
-            )[MainViewModel::class.java]
+//        if(BuildConfig.TYPE == 1){
+//
+//        }else{
+//            binding.webView.loadUrl("http://yj.aizhongxin.xyz/")
+//        }
+        val webLinkService = RetrofitHelper.getInstance(this).create(WebSiteLinkApi::class.java)
+        val buyerRepository = WebSiteRepostory(webLinkService)
+        mainViewModel = ViewModelProvider(
+            this,
+            MainViewModelFactory(buyerRepository)
+        )[MainViewModel::class.java]
 
-            mainViewModel.webSite.observe(this) {
-                if (it != null) {
-                    binding.webView.loadUrl(it.data)
-                }
+        mainViewModel.webSite.observe(this) {
+            if (it != null) {
+                Log.d("TASDFASDFASFD", "onCreate: ${it.data}")
+                binding.webView.loadUrl(it.data)
             }
-        }else{
-            binding.webView.loadUrl("http://yj.aizhongxin.xyz/")
         }
 
         if (ContextCompat.checkSelfPermission(

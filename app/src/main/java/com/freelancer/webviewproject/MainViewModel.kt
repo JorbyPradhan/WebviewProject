@@ -12,7 +12,10 @@ class MainViewModel(private val buyerRepository: WebSiteRepostory)  : ViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                buyerRepository.getWebsite()
+                if(BuildConfig.TYPE == 1){
+                    buyerRepository.getWebsite()
+                }else buyerRepository.getLinks()
+
             } catch (e: HttpException) {
                 e.printStackTrace()
             } catch (e: Exception) {
